@@ -1,0 +1,7 @@
+services:
+  unit:
+    build:
+      args:
+        TZ: ${TZ:-UTC}
+      context: .
+    image: andrei-stepanov/unit-php:latest

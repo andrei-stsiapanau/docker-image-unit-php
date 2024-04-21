@@ -1,0 +1,29 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "routes"
+        }
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": "!/index.php"
+            },
+            "action": {
+                "share": "/srv/www/public$uri",
+                "fallback": {
+                    "pass": "applications/laravel"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "laravel": {
+            "type": "php",
+            "root": "/srv/www/public/",
+            "script": "index.php",
+            "user": "www-data",
+            "group": "www-data"
+        }
+    }
+}
