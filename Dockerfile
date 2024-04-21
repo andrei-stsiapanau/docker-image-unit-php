@@ -42,6 +42,7 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
         memcached \
         msgpack \
         redis \
+        xdebug \
     && docker-php-ext-enable \
         bcmath \
         gd \
@@ -56,8 +57,10 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
         pdo_mysql \
         redis \
         soap \
+        xdebug \
         zip
 
 ADD config.json /docker-entrypoint.d/config.json
+ADD xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 WORKDIR /srv/www
