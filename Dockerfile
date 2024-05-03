@@ -5,6 +5,8 @@ LABEL org.opencontainers.image.authors="andrew.stephanoff@gmail.com"
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG TZ="UTC"
 
+ADD config.json /docker-entrypoint.d/
+
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone \
     && apt-get update \
     && apt-get upgrade --yes \
@@ -43,21 +45,21 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
         msgpack \
         redis \
     && docker-php-ext-enable \
-        bcmath \
-        gd \
         igbinary \
-        imap \
         imagick \
-        intl \
-        ldap \
         memcached \
         msgpack \
-        opcache \
-        pdo_mysql \
         redis \
-        soap \
-        zip
-
-ADD config.json /docker-entrypoint.d/config.json
-
-WORKDIR /srv/www
+    && apt-get --yes remove \
+        libc-client-dev \
+        libicu-dev \
+        libkrb5-dev \
+        libldap2-dev \
+        libmagickwand-dev \
+        libmemcached-dev \
+        libpng-dev \
+        libxml2-dev \
+        libzip-dev \
+        zlib1g-dev \
+    && apt-get --yes autoremove \
+    && apt-get --yes clean
